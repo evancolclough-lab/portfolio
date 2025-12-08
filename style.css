@@ -311,15 +311,7 @@ p {
     margin: 0 auto;
 }
 
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 2px;
-    height: 100%;
-    background: var(--border-color);
-}
+
 
 .timeline-item {
     position: relative;
