@@ -8,33 +8,68 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <meta name="referrer" content="no-referrer-when-downgrade">
 </head>
 
 <body>
-    <header class="hero">
+    <div class="bg-scene" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grain"></div>
+    </div>
+
+    <nav class="glass-nav">
+        <div class="nav-inner">
+            <a href="#top" class="nav-logo">EC</a>
+            <div class="nav-links">
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#portfolio">Work</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="moon-icon" viewBox="0 0 24 24">
+                    <path d="M21 12.75a9.75 9.75 0 11-11.25-11.25 7.5 7.5 0 0011.25 11.25z" />
+                </svg>
+                <svg class="sun-icon" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 5.106a.75.75 0 011.06 0l1.591 1.591a.75.75 0 11-1.06 1.06l-1.591-1.591a.75.75 0 010-1.06zm-13.788 0a.75.75 0 010 1.06l-1.591 1.591a.75.75 0 01-1.06-1.06l1.591-1.591a.75.75 0 011.06 0zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm6.894 1.106a.75.75 0 011.06-1.06l1.591 1.591a.75.75 0 11-1.06 1.06l-1.591-1.591zm-13.788 0a.75.75 0 01-1.06-1.06l1.591-1.591a.75.75 0 111.06 1.06l-1.591 1.591zM18.75 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5h-2.25a.75.75 0 01-.75-.75zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75z" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero reveal" id="top">
         <div class="container hero-content">
             <div class="hero-text">
+                <span class="eyebrow">Halifax, Nova Scotia</span>
                 <h1>Hello, I'm <span class="highlight">Evan Colclough</span>.</h1>
-                <p class="subtitle">Nova Scotian | Digital Media | Politics</p>
-                <p class="bio">I’m a Dalhousie University graduate with First Class Honours in Political Science and a
-                    digital media professional specializing in graphic design, driven by a strong passion for politics.
-                </p>
-                <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                <p class="subtitle">Digital Media &middot; Politics &middot; Strategy</p>
+                <p class="bio">Dalhousie University graduate with First Class Honours in Political Science and a digital media professional specializing in graphic design and strategic digital content. Currently a Digital Media Officer in the Office of the Premier of Nova Scotia, with experience on both provincial and federal political campaigns. Passionate about politics, communications, and engaging and informing audiences.</p>
             </div>
             <div class="hero-image">
-                <img src="assets/profile.jpg" alt="Evan Colclough Headshot">
+                <div class="image-glass-frame" id="tilt-frame">
+                    <img src="assets/profile.jpg" alt="Evan Colclough Headshot">
+                </div>
             </div>
+        </div>
+        <div class="scroll-cue">
+            <span>Scroll</span>
+            <span class="chevron"></span>
         </div>
     </header>
 
-
-
-    <section id="experience" class="section bg-light">
+    <section id="experience" class="section reveal">
         <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline gemini-glow" style="padding: 2rem;">
-                <div class="timeline-item">
+            <div class="section-header">
+                <h2 class="section-title">Experience</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item glass-card">
                     <div class="timeline-date">Mar 2025 - Present</div>
                     <div class="timeline-content">
                         <h3>Digital Media Officer</h3>
@@ -43,7 +78,7 @@
 
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item glass-card">
                     <div class="timeline-date">May 2023 - Mar 2025</div>
                     <div class="timeline-content">
                         <h3>Communications and Research Officer</h3>
@@ -52,7 +87,7 @@
 
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item glass-card">
                     <div class="timeline-date">Jul 2022 - Sep 2022</div>
                     <div class="timeline-content">
                         <h3>Campaign Assistant</h3>
@@ -60,7 +95,7 @@
 
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item glass-card">
                     <div class="timeline-date">Apr 2022 - Jun 2022</div>
                     <div class="timeline-content">
                         <h3>Call Centre Supervisor</h3>
@@ -68,7 +103,7 @@
                         <p class="details">Internal Communications</p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item glass-card">
                     <div class="timeline-date">Apr 2021 - Mar 2022</div>
                     <div class="timeline-content">
                         <h3>Customer Resolution Specialist (Social Media)</h3>
@@ -80,10 +115,12 @@
         </div>
     </section>
 
-    <section id="education" class="section">
+    <section id="education" class="section reveal">
         <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-card gemini-glow">
+            <div class="section-header">
+                <h2 class="section-title">Education</h2>
+            </div>
+            <div class="education-card glass-card">
                 <div class="education-logo">
                     <img src="assets/dal-logo.png" alt="Dalhousie University" onerror="this.style.display='none'">
                     <!-- Assuming logo might not exist yet, preventing broken image icon -->
@@ -93,7 +130,26 @@
                     <p class="degree">Honours Bachelor of Arts in Political Science, Minor in History</p>
                     <p class="date">2021 - Jun 2025</p>
                     <p class="details">Graduated with First Class Honours</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="portfolio" class="section reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Recent Creative Work</h2>
+            </div>
+            <div class="portfolio-carousel-container glass-card">
+                <div class="carousel" id="portfolio-carousel">
+                    <div class="carousel-inner" id="carousel-inner">
+                        <!-- Images will be dynamically loaded here from portfolio-data.js -->
+                    </div>
+                    <button class="carousel-control prev" aria-label="Previous Slide">&lt;</button>
+                    <button class="carousel-control next" aria-label="Next Slide">&gt;</button>
+                    <div class="carousel-dots" id="carousel-dots">
+                        <!-- Dots will be dynamically generated here -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,22 +157,48 @@
 
     <script src="script.js"></script>
 
-    <section id="contact" class="section bg-light">
+    <section id="contact" class="section reveal">
         <div class="container">
-            <div class="linkedin-container">
-                <a href="https://www.linkedin.com/in/evan-colclough-8052a717b/" target="_blank"
-                    class="linkedin-box gemini-glow">
-                    <span>Connect with me on LinkedIn</span>
-                </a>
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+            </div>
+            <div class="linkedin-card-wrapper">
+                <div class="linkedin-card glass-card">
+                    <div class="linkedin-header">
+                        <img src="assets/profile.jpg" alt="Evan Colclough" class="linkedin-pfp">
+                        <div class="linkedin-info">
+                            <span class="linkedin-name">Evan Colclough</span>
+                            <span class="linkedin-title">Digital Media Officer | Politics</span>
+                            <span class="linkedin-company">Dalhousie University</span>
+                        </div>
+                        <div class="linkedin-logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="#0077b5">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="linkedin-actions">
+                        <a href="https://www.linkedin.com/in/evan-colclough-8052a717b/" target="_blank"
+                            rel="noopener noreferrer" class="btn btn-linkedin">Contact me on LinkedIn</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Evan Colclough. All rights reserved.</p>
+            <p>&copy; 2026 Evan Colclough. All rights reserved.</p>
         </div>
     </footer>
+    <!-- Image Lightbox for Full Screen View -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close full screen">&times;</button>
+        <img src="" alt="" class="lightbox-content" id="lightbox-img">
+    </div>
+
 </body>
 
 </html>
