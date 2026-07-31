@@ -8,29 +8,52 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!carouselInner || !carouselDots) return;
 
         const extensions = ['jpg', 'png', 'jpeg', 'webp'];
-        const detectedImages = [];
+
+        // Checks each extension for a given base filename (no extension) and
+        // returns the first URL that actually exists, or null.
+        const findVariant = async (base) => {
+            for (const ext of extensions) {
+                const url = `assets/${base}.${ext}`;
+                try {
+                    const response = await fetch(url);
+                    if (response.ok) return url;
+                } catch (e) {
+                    // Fetch failed (common if file is missing)
+                }
+            }
+            return null;
+        };
+
+        // Each entry is either a single image ({ type: 'image', src, alt }) or
+        // a grouped multi-image post ({ type: 'group', images: [...] }), detected
+        // via the assets/portfolio-N-1, portfolio-N-2, ... naming convention.
+        const detectedItems = [];
         let index = 1;
         let consecutiveFailures = 0;
 
         // Scan until we hit a gap or a limit (safety cap of 50)
         while (index <= 50) {
-            let found = false;
-            for (const ext of extensions) {
-                const url = `assets/portfolio-${index}.${ext}`;
-                try {
-                    // We use a GET request to ensure compatibility with most servers
-                    const response = await fetch(url);
-                    if (response.ok) {
-                        detectedImages.push({ src: url, alt: `Portfolio Piece ${index}` });
-                        found = true;
-                        break; // Found the file, move to next index
-                    }
-                } catch (e) {
-                    // Fetch failed (common if file is missing)
-                }
+            const single = await findVariant(`portfolio-${index}`);
+
+            if (single) {
+                detectedItems.push({ type: 'image', src: single, alt: `Portfolio Piece ${index}` });
+                consecutiveFailures = 0;
+                index++;
+                continue;
             }
 
-            if (found) {
+            // No standalone image at this position — check for a grouped post.
+            const groupImages = [];
+            let sub = 1;
+            while (sub <= 10) {
+                const groupSrc = await findVariant(`portfolio-${index}-${sub}`);
+                if (!groupSrc) break;
+                groupImages.push({ src: groupSrc, alt: `Portfolio Piece ${index}, image ${sub}` });
+                sub++;
+            }
+
+            if (groupImages.length > 0) {
+                detectedItems.push({ type: 'group', images: groupImages });
                 consecutiveFailures = 0;
             } else {
                 consecutiveFailures++;
@@ -42,19 +65,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // If no images found, show a fallback or just clear
-        if (detectedImages.length === 0) {
+        if (detectedItems.length === 0) {
             carouselInner.innerHTML = '<p style="padding: 2rem; text-align: center;">Add images to assets/ named portfolio-1.jpg to see them here!</p>';
             return;
         }
 
-        // Render the detected images
+        // Render the detected items
         carouselInner.innerHTML = '';
         carouselDots.innerHTML = '';
-        
-        detectedImages.forEach((item, i) => {
+
+        detectedItems.forEach((item, i) => {
             const carouselItem = document.createElement('div');
             carouselItem.className = `carousel-item${i === 0 ? ' active' : ''}`;
-            carouselItem.innerHTML = `<img src="${item.src}" alt="${item.alt}" loading="lazy">`;
+
+            if (item.type === 'group') {
+                carouselItem.classList.add('carousel-item-group');
+                const slides = item.images.map((img, subIdx) =>
+                    `<img src="${img.src}" alt="${img.alt}" loading="lazy" class="post-slide${subIdx === 0 ? ' active' : ''}">`
+                ).join('');
+                const postDots = item.images.map((_, subIdx) =>
+                    `<span class="post-dot${subIdx === 0 ? ' active' : ''}" data-sub-index="${subIdx}"></span>`
+                ).join('');
+                carouselItem.innerHTML = `
+                    <div class="post-stage">
+                        ${slides}
+                        <div class="post-nav">
+                            <button type="button" class="post-arrow post-prev" aria-label="Previous image in post">&lsaquo;</button>
+                            <div class="post-dots">${postDots}</div>
+                            <button type="button" class="post-arrow post-next" aria-label="Next image in post">&rsaquo;</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                carouselItem.innerHTML = `<img src="${item.src}" alt="${item.alt}" loading="lazy">`;
+            }
+
             carouselInner.appendChild(carouselItem);
 
             const dot = document.createElement('span');
@@ -87,10 +132,46 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = ''; // Resume scrolling
         }
 
-        // Add clicks to images
+        // Add clicks to images (and wire up nested nav for grouped posts)
         items.forEach(item => {
-            const img = item.querySelector('img');
-            img.addEventListener('click', () => openLightbox(img.src, img.alt));
+            if (item.classList.contains('carousel-item-group')) {
+                const slides = Array.from(item.querySelectorAll('.post-slide'));
+                const postDots = Array.from(item.querySelectorAll('.post-dot'));
+                const postPrev = item.querySelector('.post-prev');
+                const postNext = item.querySelector('.post-next');
+                let subIndex = 0;
+
+                function showSub(newSubIndex) {
+                    if (newSubIndex < 0) newSubIndex = slides.length - 1;
+                    else if (newSubIndex >= slides.length) newSubIndex = 0;
+                    subIndex = newSubIndex;
+                    slides.forEach((s, i) => s.classList.toggle('active', i === subIndex));
+                    postDots.forEach((d, i) => d.classList.toggle('active', i === subIndex));
+                }
+
+                if (postPrev) postPrev.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showSub(subIndex - 1);
+                });
+                if (postNext) postNext.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showSub(subIndex + 1);
+                });
+                postDots.forEach((d, i) => d.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showSub(i);
+                }));
+
+                slides.forEach(img => {
+                    img.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openLightbox(img.src, img.alt);
+                    });
+                });
+            } else {
+                const img = item.querySelector('img');
+                img.addEventListener('click', () => openLightbox(img.src, img.alt));
+            }
         });
 
         // Close logic
