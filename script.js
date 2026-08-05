@@ -78,13 +78,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Flatten into a single ordered list of slides for the lightbox, so
         // arrow keys/buttons browse the entire portfolio continuously, even
         // across grouped multi-image posts.
+        const VISIBLE_COUNT = 3;
         const lightboxSlides = [];
+        const extraTiles = [];
         grid.innerHTML = '';
 
-        detectedItems.forEach((item) => {
+        detectedItems.forEach((item, i) => {
             const tile = document.createElement('button');
             tile.type = 'button';
             tile.className = 'portfolio-tile';
+            if (i >= VISIBLE_COUNT) {
+                tile.classList.add('portfolio-tile-hidden');
+                extraTiles.push(tile);
+            }
 
             const startSlide = lightboxSlides.length;
 
@@ -104,6 +110,22 @@ document.addEventListener('DOMContentLoaded', () => {
             tile.addEventListener('click', () => openLightbox(startSlide));
             grid.appendChild(tile);
         });
+
+        const viewAllBtn = document.getElementById('portfolio-view-all');
+        if (viewAllBtn) {
+            if (extraTiles.length > 0) {
+                viewAllBtn.hidden = false;
+                let expanded = false;
+                viewAllBtn.addEventListener('click', () => {
+                    expanded = !expanded;
+                    extraTiles.forEach(tile => tile.classList.toggle('portfolio-tile-hidden', !expanded));
+                    viewAllBtn.textContent = expanded ? 'Show Less' : 'View Full Portfolio';
+                    if (!expanded) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            } else {
+                viewAllBtn.hidden = true;
+            }
+        }
 
         // --- LIGHTBOX LOGIC ---
         const lightbox = document.getElementById('lightbox');

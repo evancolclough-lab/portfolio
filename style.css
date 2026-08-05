@@ -880,6 +880,19 @@ p {
     -webkit-backdrop-filter: blur(8px);
 }
 
+.portfolio-tile-hidden {
+    display: none;
+}
+
+.portfolio-view-all:not([hidden]) {
+    display: block;
+    margin: 1.75rem auto 0;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
 /* ---------------- LinkedIn / Contact Card ---------------- */
 .linkedin-card-wrapper {
     display: flex;
