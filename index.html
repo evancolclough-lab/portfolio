@@ -4,15 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evan Colclough</title>
+    <title>Evan Colclough | Digital Media Officer &amp; Communications Strategist</title>
+    <meta name="description"
+        content="Evan Colclough is a Digital Media Officer in the Office of the Premier of Nova Scotia, specializing in political communications, graphic design, and digital strategy.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://evancolclough.ca/">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://evancolclough.ca/">
+    <meta property="og:site_name" content="Evan Colclough">
+    <meta property="og:title" content="Evan Colclough | Digital Media Officer &amp; Communications Strategist">
+    <meta property="og:description"
+        content="Digital Media Officer in the Office of the Premier of Nova Scotia, specializing in political communications, graphic design, and digital strategy.">
+    <meta property="og:image" content="https://evancolclough.ca/assets/profile.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Evan Colclough | Digital Media Officer &amp; Communications Strategist">
+    <meta name="twitter:description"
+        content="Digital Media Officer in the Office of the Premier of Nova Scotia, specializing in political communications, graphic design, and digital strategy.">
+    <meta name="twitter:image" content="https://evancolclough.ca/assets/profile.jpg">
+
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Evan Colclough",
+        "url": "https://evancolclough.ca/",
+        "image": "https://evancolclough.ca/assets/profile.jpg",
+        "jobTitle": "Digital Media Officer",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Office of the Premier of Nova Scotia"
+        },
+        "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Dalhousie University"
+        },
+        "sameAs": [
+            "https://www.linkedin.com/in/evan-colclough-8052a717b/"
+        ]
+    }
+    </script>
 </head>
 
 <body>
@@ -30,7 +73,7 @@
                 <a href="#experience">Experience</a>
                 <a href="#education">Education</a>
                 <a href="#skills">Skills</a>
-                <a href="#portfolio">Work</a>
+                <a href="#portfolio">Portfolio</a>
                 <a href="#contact">Contact</a>
             </div>
             <span class="nav-current-section" id="nav-current-section" aria-hidden="true"></span>
@@ -329,16 +372,9 @@
             <div class="section-header">
                 <h2 class="section-title">Recent Creative Work</h2>
             </div>
-            <div class="portfolio-carousel-container glass-card">
-                <div class="carousel" id="portfolio-carousel">
-                    <div class="carousel-inner" id="carousel-inner">
-                        <!-- Images will be dynamically loaded here from portfolio-data.js -->
-                    </div>
-                    <button class="carousel-control prev" aria-label="Previous Slide">&lt;</button>
-                    <button class="carousel-control next" aria-label="Next Slide">&gt;</button>
-                    <div class="carousel-dots" id="carousel-dots">
-                        <!-- Dots will be dynamically generated here -->
-                    </div>
+            <div class="portfolio-grid-container">
+                <div class="portfolio-grid" id="portfolio-grid">
+                    <!-- Tiles are scanned from assets/ and injected here by script.js -->
                 </div>
             </div>
         </div>
@@ -385,7 +421,10 @@
     <!-- Image Lightbox for Full Screen View -->
     <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
         <button class="lightbox-close" id="lightbox-close" aria-label="Close full screen">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous piece">&lsaquo;</button>
         <img src="" alt="" class="lightbox-content" id="lightbox-img">
+        <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next piece">&rsaquo;</button>
+        <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
 
 </body>
